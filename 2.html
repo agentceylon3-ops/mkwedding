@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#f3ece1">
     <title>Wedding Invitation - Nethmi & Sanuja</title>
     <script>
     // Access තියෙනවද කියලා check කරනවා
@@ -37,6 +40,53 @@
             padding: 0;
             box-sizing: border-box;
         }
+
+        .dark-lock-scope,
+.dark-lock-scope * {
+    color-scheme: light only !important;
+    forced-color-adjust: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    .dark-lock-scope,
+    .dark-lock-scope * {
+        color-scheme: light only !important;
+        forced-color-adjust: none !important;
+    }
+
+    .dark-lock-scope .invitation-wrapper {
+        background-color: #f3ece1 !important;
+        color: #3a4028 !important;
+    }
+
+    .dark-lock-scope .invitation-card {
+        background-color: #fbf6ee !important;
+        color: #3a4028 !important;
+    }
+
+    .dark-lock-scope .save-the-date,
+    .dark-lock-scope .couple-name,
+    .dark-lock-scope .content-area {
+        color: #3a4028 !important;
+    }
+
+    .dark-lock-scope .subtitle,
+    .dark-lock-scope .and-text,
+    .dark-lock-scope .main-detail,
+    .dark-lock-scope .footer-note {
+        color: #2f3322 !important;
+    }
+
+    .dark-lock-scope .sub-detail {
+        color: #4a4e3d !important;
+    }
+
+    .dark-lock-scope .gold-heart,
+    .dark-lock-scope .heart-divider .heart,
+    .dark-lock-scope .icon-box {
+        color: #b5924c !important;
+    }
+}
 
         body {
            background-image:url('background.jpeg'); /* Darker background for PC view */
@@ -1113,6 +1163,105 @@ body {
 }
 
 
+/*music button*/
+/* Fixed Top-Right Music Button */
+.music-btn {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid #b5924c !important;
+    background-color: rgba(251, 246, 238, 0.92) !important;
+    color: #8a6c30 !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    z-index: 9999;
+    box-shadow: 0 6px 18px rgba(74, 59, 44, 0.18);
+    backdrop-filter: blur(6px);
+    transition: transform 0.25s ease, background-color 0.25s ease, opacity 0.25s ease;
+    color-scheme: light only;
+}
+
+.music-btn:hover {
+    transform: scale(1.06);
+    background-color: #fbf6ee !important;
+}
+
+.music-btn:active {
+    transform: scale(0.96);
+}
+
+.music-btn .music-icon {
+    font-size: 0.92rem;
+    color: #8a6c30 !important;
+}
+
+/* Sound bars indicator */
+.music-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 1.5px;
+    height: 11px;
+    margin-left: 1px;
+}
+
+.music-bars span {
+    width: 2px;
+    height: 4px;
+    background-color: #b5924c !important;
+    border-radius: 2px;
+    transition: height 0.2s ease;
+}
+
+/* Playing state animation */
+.music-btn.is-playing .music-bars span:nth-child(1) {
+    animation: eqBar 0.8s ease-in-out infinite;
+}
+.music-btn.is-playing .music-bars span:nth-child(2) {
+    animation: eqBar 0.8s ease-in-out 0.2s infinite;
+}
+.music-btn.is-playing .music-bars span:nth-child(3) {
+    animation: eqBar 0.8s ease-in-out 0.4s infinite;
+}
+
+/* Muted / Paused state */
+.music-btn.is-muted {
+    opacity: 0.72;
+    background-color: rgba(243, 236, 225, 0.9) !important;
+}
+
+.music-btn.is-muted .music-bars span {
+    height: 3px;
+    animation: none;
+}
+
+.music-btn.is-muted .music-icon::after {
+    content: "";
+}
+
+@keyframes eqBar {
+    0%, 100% { height: 3px; }
+    50% { height: 11px; }
+}
+
+@media (max-width: 480px) {
+    .music-btn {
+        top: 14px;
+        right: 14px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .music-btn .music-icon {
+        font-size: 0.85rem;
+    }
+}
+
 
     </style>
 </head>
@@ -1126,6 +1275,22 @@ body {
 </div>
 
     <div class="invitation-card">
+
+
+      <!-- Background Wedding Music -->
+<audio id="bgMusic" src="mu.mp3" loop preload="auto"></audio>
+
+<!-- Fixed Top-Right Music Toggle Button -->
+<button type="button" id="musicToggleBtn" class="music-btn is-playing" aria-label="Toggle Background Music" title="Music On/Off">
+    <i class="fa-solid fa-music music-icon"></i>
+    <span class="music-bars" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+    </span>
+</button>
+
+
         
         <div class="suba-mangalam">SRI SUBA MANGALAM!</div>
         <div class="invited-text">The Esteemed presence of</div>
@@ -1155,16 +1320,16 @@ body {
 
 
         <div class="illustration-container">
-            <img src="joduva.png" alt="Couple Illustration">
+            <img src="couple.png" alt="Couple Illustration">
         </div>
 
         <div>
             <h2 style="color:#8b5a62 ;"><b>Together Forever</b></h2>
-            <p style="color: #b59049;"> "Two hearts, one promise and a lifetime of love. <br>
-With every laugh, every tear and every quiet moment we choose each other  " _<br> <b>Together Forever </b></p>
+            <p style="color: #b59049;"> Two hearts, one promise and a lifetime of love. <br>
+With every laugh, every tear and every quiet moment we choose each other  _<br> <b>Together Forever </b></p>
         </div> <br> <br>
         <div>
-            <h2  class="date1"> <i> Wednesday, 27 <span  style="vertical-align: super; " >th</span>January 2027 </i></h2>
+            <h2  class="date1" style="font-size: 15px;">  Wednesday, 27 <span  style="vertical-align: super; " >TH</span>January 2027 </h2>
             <p style="color: #b59049;">please join us as we celebrate this unfoegettable day</p>
         </div> <br> <br> <br>
 
@@ -1239,7 +1404,7 @@ With every laugh, every tear and every quiet moment we choose each other  " _<br
                 <i class="fa-solid fa-file-signature"></i>
             </div>
             <h3 class="event-title">Registration</h3>
-            <p class="event-details">27 TH JANUARY 2027</p>
+            <p class="event-details" style="font-size: 20px;">27 /01 /2027</p>
             <p class="event-details"><i class="fa-regular fa-clock"></i> 4:32 AM</p>
             <p class="event-details">Hotel Green Shadow</p>
         </div>
@@ -1251,7 +1416,7 @@ With every laugh, every tear and every quiet moment we choose each other  " _<br
                 <i class="fa-solid fa-hands-holding-circle"></i>
             </div>
             <h3 class="event-title">Reception Time</h3>
-            <p class="event-details">27 TH JANUARY 2027</p>
+            <p class="event-details" style="font-size: 20px;">27 /01 /2027</p>
             <p class="event-details"><i class="fa-regular fa-clock"></i> 8:30 AM</p>
             <p class="event-details">Hotel Green Shadow</p>
         </div>
@@ -1673,6 +1838,79 @@ document.addEventListener('DOMContentLoaded', () => {
       notificationBox.classList.remove('show');
     }
   }
+
+
+  //music icon
+  // --- Background Music Autoplay & Toggle ---
+const bgMusic = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicToggleBtn");
+
+if (bgMusic && musicBtn) {
+    let userPausedManually = false;
+
+    const updateMusicUI = (isPlaying) => {
+        if (isPlaying) {
+            musicBtn.classList.add("is-playing");
+            musicBtn.classList.remove("is-muted");
+            musicBtn.setAttribute("title", "Mute Music");
+        } else {
+            musicBtn.classList.remove("is-playing");
+            musicBtn.classList.add("is-muted");
+            musicBtn.setAttribute("title", "Play Music");
+        }
+    };
+
+    const tryAutoPlay = () => {
+        if (userPausedManually) return;
+        bgMusic.play().then(() => {
+            updateMusicUI(true);
+        }).catch(() => {
+            // Browser autoplay block කළොත් muted UI පෙන්වයි; පළමු touch/click එකේදී play වේ
+            updateMusicUI(false);
+        });
+    };
+
+    // Page open වුණු ගමන් play කරන්න උත්සාහ කරයි
+    tryAutoPlay();
+
+    // Browser එක autoplay block කළොත් පළමු click / touch එකේදී play කරයි
+    const unlockAudioOnFirstInteraction = () => {
+        if (!userPausedManually && bgMusic.paused) {
+            bgMusic.play().then(() => {
+                updateMusicUI(true);
+            }).catch(() => {});
+        }
+        document.removeEventListener("click", unlockAudioOnFirstInteraction);
+        document.removeEventListener("touchstart", unlockAudioOnFirstInteraction);
+    };
+
+    document.addEventListener("click", unlockAudioOnFirstInteraction, { passive: true });
+    document.addEventListener("touchstart", unlockAudioOnFirstInteraction, { passive: true });
+
+    // Music icon click කළාම stop (pause) / play toggle වේ
+    musicBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        if (bgMusic.paused) {
+            userPausedManually = false;
+            bgMusic.play().then(() => {
+                updateMusicUI(true);
+            }).catch(() => {
+                updateMusicUI(false);
+            });
+        } else {
+            userPausedManually = true;
+            bgMusic.pause();
+            updateMusicUI(false);
+        }
+    });
+}
+
+  //dark theme 
+  document.documentElement.style.colorScheme = "light only";
+if (document.body) {
+    document.body.style.colorScheme = "light only";
+}
   
     </script>
 </body>
