@@ -30,14 +30,14 @@
         }
         @media (max-width: 768px) {
             .katayam{
-                margin-left: 15%;
-                margin-top: -30px;
+                margin-left: 10%;
+                margin-top: -80px;
             }
             .kimage{
-                width: 80%;
+                width: 90% !important;
             }
             .wetext{
-                margin-left: 100px;
+                margin-left: 90px;
             }
         }
 
@@ -49,6 +49,7 @@
             font-size: 15px;
             margin-left: 20%;
             color: #b59049;
+            margin-top: 10px;
         }
        
 
@@ -110,6 +111,8 @@
         .open{
             text-decoration: none;
             color: #8a6f3a;
+            margin-left: -10px;
+            
         }
         .open:hover{
             color: wheat;
@@ -182,13 +185,76 @@ body {
 }
 
 
-        </style>
+/*image retata*/
+@keyframes haMandalaSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ha-mandala-spin {
+  animation: haMandalaSpin 25s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/*pihatu*/
+.ha-feathers-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.ha-feather {
+  position: absolute;
+  top: -30px;
+  color: #7c4d32;
+  opacity: 0.22;
+  line-height: 1;
+  user-select: none;
+  animation-name: haFeatherFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes haFeatherFall {
+  0% {
+    transform: translate3d(0, -30px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.22;
+  }
+  50% {
+    transform: translate3d(18px, 50vh, 0) rotate(22deg);
+    opacity: 0.2;
+  }
+  85% {
+    opacity: 0.16;
+  }
+  100% {
+    transform: translate3d(-14px, 105vh, 0) rotate(-18deg);
+    opacity: 0;
+  }
+}
+
+</style>
 </head>
 <body>
+
+    <div class="ha-feathers-container" id="haFeathersContainer" aria-hidden="true"></div>
     <div class="page-transition-overlay"></div>
 
     <div class="katayam">
-        <img src="katayam.png" alt="katayam" class="kimage">
+        <img src="katayam.png" alt="katayam" class="kimage ha-mandala-spin">
         <p class="wetext">THE WEDDING OF</p>
     </div> <br>
 
@@ -249,6 +315,51 @@ body {
   if (inviteType) {
     sessionStorage.setItem('weddingInviteType', inviteType);
   }
+
+
+  //pihatu
+  document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("haFeathersContainer");
+  if (!container) return;
+
+  const featherShapes = [
+    '<svg viewBox="0 0 24 24" width="100%" height="100%" fill="currentColor"><path d="M20.24 2.76C14.5 3.4 9.6 6.8 6.9 11.7c-1.5 2.7-2.2 5.6-2.4 8.2L3 21.4l1.4 1.4 1.6-1.6c2.5-.2 5.3-.9 8-2.4 4.9-2.7 8.3-7.6 8.9-13.3l.3-2.9-2.9.5zm-3.1 6.7l-6.6 6.6-1.1-1.1 6.6-6.6 1.1 1.1z"/></svg>',
+    '<svg viewBox="0 0 24 24" width="100%" height="100%" fill="currentColor"><path d="M19.5 3.5c-4.8.8-8.9 3.7-11.2 7.9-1.1 2-1.7 4.2-1.9 6.2L5 19l1.2 1.2 1.4-1.4c2-.2 4.2-.8 6.2-1.9 4.2-2.3 7.1-6.4 7.9-11.2l.2-2.4-2.4.2zm-2.8 5.9l-5.7 5.7-.9-.9 5.7-5.7.9.9z"/></svg>'
+  ];
+
+  function spawnFeather() {
+    const feather = document.createElement("span");
+    feather.className = "ha-feather";
+    feather.innerHTML = featherShapes[Math.floor(Math.random() * featherShapes.length)];
+
+    const size = Math.floor(Math.random() * 7) + 12; // 12px - 18px (පොඩි පිහාටු)
+    const leftPos = Math.random() * 100;
+    const duration = (Math.random() * 6 + 8).toFixed(2); // 8s - 14s
+    const delay = (Math.random() * 1.5).toFixed(2);
+    const maxOpacity = (Math.random() * 0.1 + 0.14).toFixed(2); // 0.14 - 0.24 (ළාවට පේන්න)
+
+    feather.style.width = size + "px";
+    feather.style.height = size + "px";
+    feather.style.left = leftPos + "vw";
+    feather.style.animationDuration = duration + "s";
+    feather.style.animationDelay = delay + "s";
+    feather.style.setProperty("--feather-opacity", maxOpacity);
+
+    container.appendChild(feather);
+
+    setTimeout(function () {
+      feather.remove();
+    }, (parseFloat(duration) + parseFloat(delay)) * 1000 + 300);
+  }
+
+  for (let i = 0; i < 6; i++) {
+    setTimeout(spawnFeather, i * 450);
+  }
+
+  setInterval(spawnFeather, 950);
+});
+
+
 </script>
 </body>
 </html>
