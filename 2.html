@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
 <meta name="theme-color" content="#f3ece1">
     <title>Wedding Invitation - Nethmi & Sanuja</title>
     <script>
@@ -18,6 +19,9 @@
     window.addEventListener('beforeunload', function() {
         sessionStorage.removeItem('allowAccess');
     });
+
+    
+
 </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1262,6 +1266,14 @@ body {
     }
 }
 
+  /*dark */
+  .dark-lock-scope,
+.dark-lock-scope * {
+    color-scheme: light !important;
+    forced-color-adjust: none !important;
+    filter: none !important;
+
+  }
 
     </style>
 </head>
